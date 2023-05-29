@@ -5,8 +5,9 @@ import com.demo.realWorld.model.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface ProfileRepository extends JpaRepository<Profile, String> {
-    List<Article> getAllArticlesByProfile(Profile profile);
-    List<User> getAllFollowers(Profile profile);
+public interface ProfileRepository extends JpaRepository<Profile, UUID> {
+    List<Article> getAllArticlesByUserName(String userName);
+    List<Profile> getAllFollowersByUserName(String userName);
 }
