@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface ArticleRepository extends JpaRepository<Article, UUID> {
     Article findByTitle(String title);
     List<Article> findByCreator(Profile profile);
+    Article findBySlug(String slug);
 }
