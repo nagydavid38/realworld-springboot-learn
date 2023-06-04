@@ -54,6 +54,7 @@ public class Article {
             this.creator = creator;
             this.favoritedCount = favoritedCount;
         }
+        public ArticleBuilder(){}
 
         public ArticleBuilder setiD(UUID iD) {
             this.iD = iD;
@@ -132,17 +133,4 @@ public class Article {
         return favoritedCount;
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "iD=" + iD +
-                ", title='" + title + '\'' +
-                ", slug='" + slug + '\'' +
-                ", description='" + description + '\'' +
-                ", body='" + body + '\'' +
-                ", tags=" + tags +
-                ", creator=" + creator +
-                ", favoritedCount=" + favoritedCount +
-                '}';
-    }
 }
