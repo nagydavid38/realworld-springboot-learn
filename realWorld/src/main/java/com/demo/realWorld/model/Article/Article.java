@@ -3,6 +3,7 @@ package com.demo.realWorld.model.Article;
 import com.demo.realWorld.model.Profile.Profile;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +22,10 @@ public class Article {
 
     @ManyToOne
     Profile creator;
+    LocalDateTime createdTime;
     Integer favoritedCount;
 
+    private Article() {}
     private Article(ArticleBuilder builder) {
         this.iD = builder.iD;
         this.title = builder.title;
@@ -42,6 +45,7 @@ public class Article {
         String body;
         List<String> tags;
         Profile creator;
+        LocalDateTime createdTime;
         Integer favoritedCount;
 
         public ArticleBuilder(UUID iD, String title, String slug, String description, String body, List<String> tags, Profile creator, Integer favoritedCount) {
@@ -53,6 +57,12 @@ public class Article {
             this.tags = tags;
             this.creator = creator;
             this.favoritedCount = favoritedCount;
+        }
+        public ArticleBuilder (String title, String description, String body, List<String> tagList){
+            this.title = title;
+            this.description = description;
+            this.body = body;
+            this.tags = tagList;
         }
         public ArticleBuilder(){}
 
@@ -88,6 +98,11 @@ public class Article {
 
         public ArticleBuilder setCreator(Profile creator) {
             this.creator = creator;
+            return this;
+        }
+
+        public ArticleBuilder setCreatedTime(LocalDateTime createdTime) {
+            this.createdTime = createdTime;
             return this;
         }
 

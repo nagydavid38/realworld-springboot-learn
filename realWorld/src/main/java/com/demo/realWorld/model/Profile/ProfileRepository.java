@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProfileRepository extends JpaRepository<Profile, UUID> {
-    List<Article> getAllArticlesByUserName(String userName);
+
     List<Profile> getAllFollowersByUserName(String userName);
 }
