@@ -1,5 +1,7 @@
 package com.demo.realWorld.controller.dtos;
 
+import com.demo.realWorld.model.Article.Article;
+
 import java.util.List;
 
 public class ArticleDto {
@@ -15,6 +17,16 @@ public class ArticleDto {
         this.description = description;
         this.body = body;
         this.tags = tags;
+    }
+
+    public ArticleDto(Article article){
+        this(
+                article.getTitle(),
+                article.getSlug(),
+                article.getDescription(),
+                article.getBody(),
+                article.getTags()
+        );
     }
 
     public String getTitle() {
