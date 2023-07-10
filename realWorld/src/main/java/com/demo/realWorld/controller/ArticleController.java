@@ -1,6 +1,7 @@
 package com.demo.realWorld.controller;
 
 import com.demo.realWorld.controller.dtos.ArticleDto;
+import com.demo.realWorld.controller.dtos.SingleArticleDto;
 import com.demo.realWorld.model.Article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,9 @@ public class ArticleController {
     }
 
     @GetMapping("/articles/{slug}")
-    public ResponseEntity<?> findArticleBySlug(@PathVariable String slug){
+    public SingleArticleDto findArticleBySlug(@PathVariable String slug){
         ArticleDto article = articleService.getArticleBySlug(slug);
-        return new ResponseEntity<>(article, HttpStatus.ACCEPTED);
+        return new SingleArticleDto(article);
     }
 
     @DeleteMapping("/articles/{slug}")
