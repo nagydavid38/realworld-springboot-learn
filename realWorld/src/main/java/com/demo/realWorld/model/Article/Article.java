@@ -1,6 +1,6 @@
 package com.demo.realWorld.model.Article;
 
-import com.demo.realWorld.model.Profile.Profile;
+import com.demo.realWorld.model.User.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -21,13 +21,12 @@ public class Article {
     List<String> tags;
 
     @ManyToOne
-    Profile creator;
+    User creator;
     LocalDateTime createdTime;
     Integer favoritedCount;
 
     private Article() {}
     private Article(ArticleBuilder builder) {
-        this.iD = builder.iD;
         this.title = builder.title;
         this.slug = builder.slug;
         this.description = builder.description;
@@ -38,18 +37,16 @@ public class Article {
     }
 
     public static class ArticleBuilder{
-        UUID iD;
         String title;
         String slug;
         String description;
         String body;
         List<String> tags;
-        Profile creator;
+        User creator;
         LocalDateTime createdTime;
         Integer favoritedCount;
 
-        public ArticleBuilder(UUID iD, String title, String slug, String description, String body, List<String> tags, Profile creator, Integer favoritedCount) {
-            this.iD = iD;
+        public ArticleBuilder(String title, String slug, String description, String body, List<String> tags, User creator, Integer favoritedCount) {
             this.title = title;
             this.slug = slug;
             this.description = description;
@@ -65,11 +62,6 @@ public class Article {
             this.tags = tagList;
         }
         public ArticleBuilder(){}
-
-        public ArticleBuilder setiD(UUID iD) {
-            this.iD = iD;
-            return this;
-        }
 
         public ArticleBuilder setTitle(String title) {
             this.title = title;
@@ -96,7 +88,7 @@ public class Article {
             return this;
         }
 
-        public ArticleBuilder setCreator(Profile creator) {
+        public ArticleBuilder setCreator(User creator) {
             this.creator = creator;
             return this;
         }
@@ -140,7 +132,7 @@ public class Article {
         return tags;
     }
 
-    public Profile getCreator() {
+    public User getCreator() {
         return creator;
     }
 

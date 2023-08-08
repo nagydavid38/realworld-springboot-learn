@@ -1,11 +1,9 @@
 package com.demo.realWorld.model.Comment;
 
 import com.demo.realWorld.model.Article.Article;
-import com.demo.realWorld.model.Profile.Profile;
 import com.demo.realWorld.model.User.User;
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Table(name = "comments")
@@ -16,7 +14,7 @@ public class Comment {
     UUID id;
     String content;
     @ManyToOne
-    Profile profile;
+    User user;
     @ManyToOne
     Article article;
 
@@ -36,12 +34,12 @@ public class Comment {
         this.content = content;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public User getProfile() {
+        return user;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setProfile(User user) {
+        this.user = user;
     }
 
     public Article getArticle() {

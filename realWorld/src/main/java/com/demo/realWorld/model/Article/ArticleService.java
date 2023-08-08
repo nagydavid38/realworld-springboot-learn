@@ -2,19 +2,17 @@ package com.demo.realWorld.model.Article;
 
 import com.demo.realWorld.controller.dtos.ArticleDto;
 import com.demo.realWorld.controller.dtos.DtoMapper;
+import com.demo.realWorld.controller.dtos.ProfileDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
-
-    DtoMapper mapper = new DtoMapper();
 
     private final ArticleRepository articleRepository;
 
@@ -33,7 +31,7 @@ public class ArticleService {
                             .setSlug(slug)
                             .setCreatedTime(createdDate).setFavoritedCount(0).build();
         Article createdArticle = articleRepository.save(newArticle);
-        return  mapper.toArticleDto(createdArticle);
+        return  new ArticleDto(createdArticle);
 
     }
     @Transactional
@@ -54,7 +52,7 @@ public class ArticleService {
 
         List<ArticleDto> articleList = articles.stream().map(
                 article -> new ArticleDto(article.getTitle(),article.getSlug(),
-                article.getDescription(),article.getBody(), article.getTags()))
+                article.getDescription(),article.getBody(), article.getTags(), new ProfileDto(article.getCreator())))
                 .collect(Collectors.toList());
 
         return articleList;
