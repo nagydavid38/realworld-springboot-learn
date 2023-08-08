@@ -21,6 +21,8 @@ public class User {
     String image;
     @ManyToMany
     List<User> followers;
+    @ManyToOne
+    List<User> following;
     @OneToMany(mappedBy = "creator")
     List<Article> articles;
     @OneToMany(mappedBy = "user")

@@ -20,6 +20,7 @@ public class Article {
     String body;
     List<String> tags;
 
+    @JoinColumn(name = "CREATOR_ID")
     @ManyToOne
     User creator;
     LocalDateTime createdTime;
