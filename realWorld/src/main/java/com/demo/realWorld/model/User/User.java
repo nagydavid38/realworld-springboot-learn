@@ -16,12 +16,11 @@ public class User {
     UUID iD;
 
     String password;
+    @Column(unique = true)
     String userName;
     String bio;
     String image;
     @ManyToMany
-    List<User> followers;
-    @ManyToOne
     List<User> following;
     @OneToMany(mappedBy = "creator")
     List<Article> articles;
@@ -36,18 +35,18 @@ public class User {
         String userName;
         String bio;
         String image;
-        List<User> followers;
+        List<User> following;
         List<Article> articles;
         List<Comment> comments;
 
         public UserBuilder(){}
 
-        public UserBuilder(String password, String userName, String bio, String image, List<User> followers, List<Article> articles, List<Comment> comments) {
+        public UserBuilder(String password, String userName, String bio, String image, List<User> following, List<Article> articles, List<Comment> comments) {
             this.password = password;
             this.userName = userName;
             this.bio = bio;
             this.image = image;
-            this.followers = followers;
+            this.following = following;
             this.articles = articles;
             this.comments = comments;
         }
@@ -67,8 +66,8 @@ public class User {
             this.image = image;
         }
 
-        public void setFollowers(List<User> followers) {
-            this.followers = followers;
+        public void setFollowing(List<User> following) {
+            this.following = following;
         }
 
         public void setArticles(List<Article> articles) {
@@ -89,7 +88,7 @@ public class User {
         this.articles = builder.articles;
         this.image = builder.image;
         this.comments = builder.comments;
-        this.followers = builder.followers;
+        this.following = builder.following;
         this.userName = builder.userName;
         this.password = builder.password;
     }
@@ -134,12 +133,12 @@ public class User {
         this.image = image;
     }
 
-    public List<User> getFollowers() {
-        return followers;
+    public List<User> getFollowing() {
+        return following;
     }
 
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
+    public void setFollowing(List<User> following) {
+        this.following = following;
     }
 
     public List<Article> getArticles() {

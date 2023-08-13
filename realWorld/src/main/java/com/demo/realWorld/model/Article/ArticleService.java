@@ -47,6 +47,11 @@ public class ArticleService {
     }
 
     @Transactional
+    public Article getArticleEntityBySlug(String slug){
+        return articleRepository.findBySlug(slug);
+    }
+
+    @Transactional
     public List<ArticleDto> getAllArticles(){
         List<Article> articles = articleRepository.findAll();
 

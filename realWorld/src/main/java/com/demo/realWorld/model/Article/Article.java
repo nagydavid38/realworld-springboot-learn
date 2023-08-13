@@ -15,6 +15,7 @@ public class Article {
     UUID iD;
 
     String title;
+    @Column(unique = true)
     String slug;
     String description;
     String body;
