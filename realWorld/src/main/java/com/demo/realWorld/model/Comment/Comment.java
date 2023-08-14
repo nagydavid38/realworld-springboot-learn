@@ -14,8 +14,10 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String content;
+    @JoinColumn(name = "USER_ID")
     @ManyToOne
     private User user;
+    @JoinColumn(name = "ARTICLE_ID")
     @ManyToOne
     private Article article;
     private LocalDateTime createdAt;
