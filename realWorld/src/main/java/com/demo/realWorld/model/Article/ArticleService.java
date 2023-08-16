@@ -1,14 +1,14 @@
 package com.demo.realWorld.model.Article;
 
 import com.demo.realWorld.controller.dtos.ArticleDto;
-import com.demo.realWorld.controller.dtos.DtoMapper;
 import com.demo.realWorld.controller.dtos.ProfileDto;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,29 +26,27 @@ public class ArticleService {
         LocalDateTime createdDate = LocalDateTime.now();
         String slug = articleDto.getTitle().toLowerCase().trim()
                 .replaceAll("\\s+", "-");
-        Article newArticle = new Article.ArticleBuilder(articleDto.getTitle(),
-                            articleDto.getDescription(), articleDto.getBody(), articleDto.getTags())
-                            .setSlug(slug)
-                            .setCreatedTime(createdDate).setFavoritedCount(0).build();
+        Article newArticle = new Article
+                .ArticleBuilder(
+                        articleDto.getTitle(),
+                        articleDto.getDescription(),
+                        articleDto.getBody(),
+                        articleDto.getTags())
+                        .setSlug(slug)
+                        .setCreatedTime(createdDate).setFavoritedCount(0).build();
         Article createdArticle = articleRepository.save(newArticle);
         return  new ArticleDto(createdArticle);
 
     }
     @Transactional
     public ArticleDto getArticleBySlug(String slug){
-        ArticleDto dto = null;
-        try{
-            dto = new ArticleDto(articleRepository.findBySlug(slug));
-            return dto;
-        } catch (NullPointerException exception){
-            exception.printStackTrace();
-        }
-        return dto;
+        Article article = getArticleEntityBySlug(slug);
+
+        return new ArticleDto(article);
     }
 
-    @Transactional
     public Article getArticleEntityBySlug(String slug){
-        return articleRepository.findBySlug(slug);
+        return articleRepository.findBySlug(slug).orElseThrow(() -> new NoSuchElementException("Article not found"));
     }
 
     @Transactional
@@ -63,15 +61,16 @@ public class ArticleService {
         return articleList;
     }
 
-    public Boolean deleteArticleBySlug(String slug){
-        Article article = articleRepository.findBySlug(slug);
-        if (article != null){
-            articleRepository.delete(article);
-            return true;
-        }
-        else{
-            return false;
-        }
+    @Transactional
+    public void deleteArticleBySlug(String slug){
+        Article article = articleRepository.findBySlug(slug).orElseThrow(() ->
+                new NoSuchElementException("Article not found"));
+/*
+        if (!article.getCreator().equals(user))
+            throw new IllegalArgumentException("You can not delete articles written by other authors.");
+        else
+*/
+        articleRepository.delete(article);
     }
 
 }

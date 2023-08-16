@@ -39,11 +39,7 @@ public class ArticleController {
         return new MultipleArticleDto(articles);
     }
     @DeleteMapping("/articles/{slug}")
-    public ResponseEntity<?> deleteArticleBySlug(@PathVariable String slug){
-        Boolean articleDeleted = articleService.deleteArticleBySlug(slug);
-        if (!articleDeleted)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    public void deleteArticleBySlug(@PathVariable String slug){
+        articleService.deleteArticleBySlug(slug);
     }
 }
