@@ -1,12 +1,13 @@
 package com.demo.realWorld.model.User;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
+import java.util.UUID;
 
-public interface UserRepository extends CrudRepository<User, String> {
-    User findByAccountName(String accountName);
+public interface UserRepository extends JpaRepository<User, UUID> {
 
+    List<User> getAllFollowersByUserName(String userName);
 
-
+    User getUserByUserName(String userName);
 }
