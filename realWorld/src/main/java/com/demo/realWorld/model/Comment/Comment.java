@@ -46,8 +46,7 @@ public class Comment {
         public CommentBuilder() {
         }
 
-        public CommentBuilder(UUID id, String content, User user, Article article, LocalDateTime createdAt, LocalDateTime updatedAt) {
-            this.id = id;
+        public CommentBuilder( String content, User user, Article article, LocalDateTime createdAt, LocalDateTime updatedAt) {
             this.content = content;
             this.user = user;
             this.article = article;
@@ -55,28 +54,29 @@ public class Comment {
             this.updatedAt = updatedAt;
         }
 
-        public void setId(UUID id) {
-            this.id = id;
-        }
-
-        public void setContent(String content) {
+        public CommentBuilder setContent(String content) {
             this.content = content;
+            return this;
         }
 
-        public void setUser(User user) {
+        public CommentBuilder setUser(User user) {
             this.user = user;
+            return this;
         }
 
-        public void setArticle(Article article) {
+        public CommentBuilder setArticle(Article article) {
             this.article = article;
+            return this;
         }
 
-        public void setCreatedAt(LocalDateTime createdAt) {
+        public CommentBuilder setCreatedAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
+            return this;
         }
 
-        public void setUpdatedAt(LocalDateTime updatedAt) {
+        public CommentBuilder setUpdatedAt(LocalDateTime updatedAt) {
             this.updatedAt = updatedAt;
+            return this;
         }
 
         public Comment build(){

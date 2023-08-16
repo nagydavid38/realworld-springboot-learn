@@ -1,13 +1,12 @@
 package com.demo.realWorld.controller;
 
 import com.demo.realWorld.controller.dtos.CommentDto;
+import com.demo.realWorld.controller.dtos.CreateCommentRequestDto;
 import com.demo.realWorld.controller.dtos.MultipleCommentDto;
+import com.demo.realWorld.controller.dtos.SingleCommentDto;
 import com.demo.realWorld.model.Comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,11 @@ public class CommentController {
     public MultipleCommentDto getCommentsForArticle(@PathVariable String slug){
         List<CommentDto> commentDtos = commentService.getCommentsForArticle(slug);
         return new MultipleCommentDto(commentDtos);
+    }
+
+    @PostMapping("/articles/{slug}/comments")
+    public SingleCommentDto addCommentToArticle(@PathVariable String slug, @RequestBody CreateCommentRequestDto request){
+        CommentDto commentDto = commentService.addCommentToArticle(slug, request);
+        return new SingleCommentDto(commentDto);
     }
 }

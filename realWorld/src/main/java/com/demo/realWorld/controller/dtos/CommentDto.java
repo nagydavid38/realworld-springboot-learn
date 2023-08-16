@@ -13,6 +13,13 @@ public class CommentDto {
     String body;
     ProfileDto author;
 
+    public CommentDto(Comment comment){
+        this.id = comment.getId();
+        this.createdAt = comment.getCreatedAt();
+        this.updatedAt = comment.getUpdatedAt();
+        this.body = comment.getContent();
+        this.author = new ProfileDto(comment.getProfile());
+    }
     public CommentDto(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, String body, ProfileDto author) {
         this.id = id;
         this.createdAt = createdAt;
