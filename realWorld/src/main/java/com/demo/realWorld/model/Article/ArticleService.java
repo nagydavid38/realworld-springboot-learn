@@ -1,12 +1,14 @@
 package com.demo.realWorld.model.Article;
 
 import com.demo.realWorld.controller.dtos.ArticleDto;
+import com.demo.realWorld.controller.dtos.CreateArticleDto;
 import com.demo.realWorld.controller.dtos.ProfileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -22,16 +24,16 @@ public class ArticleService {
     }
 
     @Transactional
-    public ArticleDto createArticle (ArticleDto articleDto){
+    public ArticleDto createArticle (CreateArticleDto articleDto){
         LocalDateTime createdDate = LocalDateTime.now();
-        String slug = articleDto.getTitle().toLowerCase().trim()
+        String slug = articleDto.title().toLowerCase().trim()
                 .replaceAll("\\s+", "-");
         Article newArticle = new Article
                 .ArticleBuilder(
-                        articleDto.getTitle(),
-                        articleDto.getDescription(),
-                        articleDto.getBody(),
-                        articleDto.getTags())
+                        articleDto.title(),
+                        articleDto.description(),
+                        articleDto.body(),
+                        articleDto.tagList())
                         .setSlug(slug)
                         .setCreatedTime(createdDate).setFavoritedCount(0).build();
         Article createdArticle = articleRepository.save(newArticle);

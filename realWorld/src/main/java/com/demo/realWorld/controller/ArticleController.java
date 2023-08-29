@@ -1,12 +1,11 @@
 package com.demo.realWorld.controller;
 
 import com.demo.realWorld.controller.dtos.ArticleDto;
+import com.demo.realWorld.controller.dtos.CreateArticleDto;
 import com.demo.realWorld.controller.dtos.MultipleArticleDto;
 import com.demo.realWorld.controller.dtos.SingleArticleDto;
 import com.demo.realWorld.model.Article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +21,9 @@ public class ArticleController {
     }
 
     @PostMapping("/articles")
-    public ResponseEntity<?> createArticle(@RequestBody ArticleDto article){
+    public SingleArticleDto createArticle(@RequestBody CreateArticleDto article){
         ArticleDto createdArticle = articleService.createArticle(article);
-        return new ResponseEntity<>(createdArticle, HttpStatus.ACCEPTED);
+        return new SingleArticleDto(createdArticle);
     }
 
     @GetMapping("/articles/{slug}")
