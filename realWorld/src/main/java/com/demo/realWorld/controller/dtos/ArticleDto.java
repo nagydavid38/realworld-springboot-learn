@@ -9,15 +9,15 @@ public class ArticleDto {
     String slug;
     String description;
     String body;
-    List<String> tags;
+    List<String> tagList;
     ProfileDto author;
 
-    public ArticleDto(String title, String slug, String description, String body, List<String> tags, ProfileDto author) {
+    public ArticleDto(String title, String slug, String description, String body, List<String> tagList, ProfileDto author) {
         this.title = title;
         this.slug = slug;
         this.description = description;
         this.body = body;
-        this.tags = tags;
+        this.tagList = tagList;
         this.author = author;
     }
 
@@ -48,8 +48,8 @@ public class ArticleDto {
         return body;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public List<String> getTagList() {
+        return tagList;
     }
 
     public ProfileDto getAuthor() {
