@@ -1,14 +1,13 @@
 package com.demo.realWorld.controller;
 
-import com.demo.realWorld.controller.dtos.ArticleDto;
-import com.demo.realWorld.controller.dtos.CreateArticleDto;
-import com.demo.realWorld.controller.dtos.MultipleArticleDto;
-import com.demo.realWorld.controller.dtos.SingleArticleDto;
+import com.demo.realWorld.controller.dtos.*;
+import com.demo.realWorld.exception.ArticleNotFoundException;
 import com.demo.realWorld.model.Article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +23,12 @@ public class ArticleController {
     public SingleArticleDto createArticle(@RequestBody CreateArticleDto article){
         ArticleDto createdArticle = articleService.createArticle(article);
         return new SingleArticleDto(createdArticle);
+    }
+
+    @PatchMapping("/articles/")
+    public SingleArticleDto updateArticle(@RequestBody UpdateArticleRequest request, @PathVariable String slug){
+        ArticleDto updatedArticle = articleService.updateArticle(request, slug);
+        return new SingleArticleDto(updatedArticle);
     }
 
     @GetMapping("/articles/{slug}")

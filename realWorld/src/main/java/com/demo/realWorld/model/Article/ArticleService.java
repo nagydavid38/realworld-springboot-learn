@@ -3,12 +3,13 @@ package com.demo.realWorld.model.Article;
 import com.demo.realWorld.controller.dtos.ArticleDto;
 import com.demo.realWorld.controller.dtos.CreateArticleDto;
 import com.demo.realWorld.controller.dtos.ProfileDto;
+import com.demo.realWorld.controller.dtos.UpdateArticleRequest;
+import com.demo.realWorld.exception.ArticleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class ArticleService {
     }
 
     @Transactional
-    public ArticleDto createArticle (CreateArticleDto articleDto){
+    public ArticleDto createArticle(CreateArticleDto articleDto){
         LocalDateTime createdDate = LocalDateTime.now();
         String slug = articleDto.title().toLowerCase().trim()
                 .replaceAll("\\s+", "-");
@@ -35,10 +36,24 @@ public class ArticleService {
                         articleDto.body(),
                         articleDto.tagList())
                         .setSlug(slug)
-                        .setCreatedTime(createdDate).setFavoritedCount(0).build();
+                        .setCreatedTime(createdDate)
+                        .setUpdatedTime(createdDate).setFavoritedCount(0).build();
         Article createdArticle = articleRepository.save(newArticle);
         return  new ArticleDto(createdArticle);
 
+    }
+
+    @Transactional
+    public ArticleDto updateArticle(UpdateArticleRequest request, String slug){
+        Article article = getArticleEntityBySlug(slug);
+        if(!request.getBody().equals(""))
+            article.setBody(request.getBody());
+        if(!request.getDescription().equals(""))
+            article.setDescription(request.getDescription());
+        if(!request.getTitle().equals(""))
+            article.setTitle(request.getTitle());
+        articleRepository.save(article); //save method is not necessary here, because of transactional TODO - write test method for it
+        return new ArticleDto(article);
     }
     @Transactional
     public ArticleDto getArticleBySlug(String slug){
@@ -48,7 +63,7 @@ public class ArticleService {
     }
 
     public Article getArticleEntityBySlug(String slug){
-        return articleRepository.findBySlug(slug).orElseThrow(() -> new NoSuchElementException("Article not found"));
+        return articleRepository.findBySlug(slug).orElseThrow(() -> new ArticleNotFoundException("Article not found"));
     }
 
     @Transactional
@@ -66,7 +81,7 @@ public class ArticleService {
     @Transactional
     public void deleteArticleBySlug(String slug){
         Article article = articleRepository.findBySlug(slug).orElseThrow(() ->
-                new NoSuchElementException("Article not found"));
+                new ArticleNotFoundException("Article not found"));
 /*
         if (!article.getCreator().equals(user))
             throw new IllegalArgumentException("You can not delete articles written by other authors.");

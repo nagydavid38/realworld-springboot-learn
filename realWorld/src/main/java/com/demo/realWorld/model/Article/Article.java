@@ -25,6 +25,8 @@ public class Article {
     @ManyToOne
     User creator;
     LocalDateTime createdTime;
+
+    LocalDateTime updatedTime;
     Integer favoritedCount;
 
     private Article() {}
@@ -46,6 +48,8 @@ public class Article {
         List<String> tags;
         User creator;
         LocalDateTime createdTime;
+
+        LocalDateTime updatedTime;
         Integer favoritedCount;
 
         public ArticleBuilder(String title, String slug, String description, String body, List<String> tags, User creator, Integer favoritedCount) {
@@ -100,6 +104,10 @@ public class Article {
             return this;
         }
 
+        public ArticleBuilder setUpdatedTime(LocalDateTime updatedTime){
+            this.updatedTime = updatedTime;
+            return this;
+        }
         public ArticleBuilder setFavoritedCount(Integer favoritedCount) {
             this.favoritedCount = favoritedCount;
             return this;
@@ -118,6 +126,10 @@ public class Article {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getSlug() {
         return slug;
     }
@@ -126,8 +138,16 @@ public class Article {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getBody() {
         return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public List<String> getTags() {
@@ -142,4 +162,11 @@ public class Article {
         return favoritedCount;
     }
 
+    public LocalDateTime getCreatedTime() {
+        return createdTime;
+    }
+
+    public LocalDateTime getUpdatedTime() {
+        return updatedTime;
+    }
 }
