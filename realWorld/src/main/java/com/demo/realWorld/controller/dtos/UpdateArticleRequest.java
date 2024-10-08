@@ -2,6 +2,9 @@ package com.demo.realWorld.controller.dtos;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import lombok.Getter;
+
+@Getter
 @JsonRootName("article")
 public class UpdateArticleRequest {
     String title;
@@ -14,15 +17,4 @@ public class UpdateArticleRequest {
         this.body = body != null ? body : "";
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getBody() {
-        return body;
-    }
 }

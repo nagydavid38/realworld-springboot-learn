@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,18 +28,18 @@ public class ArticleService {
         LocalDateTime createdDate = LocalDateTime.now();
         String slug = articleDto.title().toLowerCase().trim()
                 .replaceAll("\\s+", "-");
-        Article newArticle = new Article
-                .ArticleBuilder(
-                        articleDto.title(),
-                        articleDto.description(),
-                        articleDto.body(),
-                        articleDto.tagList())
-                        .setSlug(slug)
-                        .setCreatedTime(createdDate)
-                        .setUpdatedTime(createdDate).setFavoritedCount(0).build();
+        Article newArticle = Article.builder().
+                title(articleDto.title())
+                .description(articleDto.description())
+                .body(articleDto.body())
+                .tags(articleDto.tagList())
+                .slug(slug)
+                .createdTime(createdDate)
+                .updatedTime(createdDate)
+                .favoritedCount(0)
+                .build();
         Article createdArticle = articleRepository.save(newArticle);
         return  new ArticleDto(createdArticle);
-
     }
 
     @Transactional

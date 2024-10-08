@@ -33,7 +33,7 @@ public class CommentService {
                                  comment.getCreatedAt(),
                                  comment.getUpdatedAt(),
                                  comment.getContent(),
-                                 new ProfileDto(comment.getProfile())))
+                                 new ProfileDto(comment.getUser())))
                                  .toList();
 
     }
@@ -41,10 +41,8 @@ public class CommentService {
     @Transactional
     public CommentDto addCommentToArticle(String slug, CreateCommentRequestDto request){
         Article article = articleService.getArticleEntityBySlug(slug);
-        Comment comment = new Comment.CommentBuilder()
-                            .setContent(request.body())
-                            .setArticle(article)
-                            .build();
+        Comment comment = Comment.builder().content(request.body()).article(article).build();
+
         return new CommentDto(comment);
     }
 }

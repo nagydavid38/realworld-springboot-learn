@@ -1,13 +1,11 @@
 package com.demo.realWorld.controller;
 
 import com.demo.realWorld.controller.dtos.*;
-import com.demo.realWorld.exception.ArticleNotFoundException;
 import com.demo.realWorld.model.Article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
